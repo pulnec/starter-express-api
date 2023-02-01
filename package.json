@@ -15,8 +15,11 @@
     "@supabase/supabase-js": "^2.4.1",
     "axios": "^1.2.3",
     "cheerio": "^1.0.0-rc.12",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "firebase-admin": "^11.5.0",
-    "node-cron": "^3.0.2"
+    "node-cron": "^3.0.2",
+    "simple-encryptor": "^4.0.0"
   }
 }
