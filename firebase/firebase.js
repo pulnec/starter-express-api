@@ -1,4 +1,5 @@
 import admin from "firebase-admin";
+import { getFirestore, Timestamp, FieldValue } from "firebase-admin/firestore";
 import { readFile } from "node:fs/promises";
 import encryptor from "simple-encryptor";
 import * as dotenv from "dotenv";
@@ -20,6 +21,24 @@ export const firebaseInit = async () => {
   } catch {
     console.log("Firebase OFF!");
   }
+};
+
+export const updateDocumentFireStore = async (data) => {
+  const db = getFirestore();
+  const res = await db
+    .collection("DOLAR_BLUE")
+    .doc("SCREPER_DOLAR_BLUE")
+    .set(data);
+  console.log(res);
+};
+
+export const getBlueDataFireStore = async () => {
+  const db = getFirestore();
+  const dolarBlueCollection = db
+    .collection("DOLAR_BLUE")
+    .doc("SCREPER_DOLAR_BLUE");
+  const dolarBlue = await dolarBlueCollection.get();
+  return dolarBlue.data();
 };
 
 export const sendPushNotification = (title, body) => {

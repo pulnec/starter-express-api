@@ -2,7 +2,10 @@ import * as cheerio from "cheerio";
 import axios from "axios";
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
-import { sendPushNotification } from "./firebase/firebase.js";
+import {
+  sendPushNotification,
+  updateDocumentFireStore,
+} from "./firebase/firebase.js";
 import { pushMessage } from "./constant/constant.js";
 import { getTableData } from "./supabase/supabase.js";
 
@@ -70,6 +73,8 @@ export async function updateBlueData(currentCronDate) {
     last_update_page: removeStr(lastUpdate, "Actualizado el"),
     cron_last_update: currentCronDate,
   };
+
+  updateDocumentFireStore(data);
 
   const filePath = path.join(process.cwd(), "./db/dollar_blue.json");
   await writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
