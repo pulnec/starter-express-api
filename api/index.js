@@ -1,5 +1,4 @@
 import express from "express";
-import { readFile } from "node:fs/promises";
 import cron from "node-cron";
 import { updateBlueData } from "../app.js";
 import { firebaseInit, getBlueDataFireStore } from "../firebase/firebase.js";
@@ -17,7 +16,6 @@ cron.schedule(CRON_CONFIG, () => {
 
 app.get("/blue", async (req, res) => {
   const data = await getBlueDataFireStore();
-  //const data = await readFile("./db/dollar_blue.json", "utf-8").then(JSON.parse);
   res.status(200);
   res.send(data);
 });

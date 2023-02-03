@@ -1,7 +1,5 @@
 import * as cheerio from "cheerio";
 import axios from "axios";
-import { writeFile, readFile } from "node:fs/promises";
-import path from "node:path";
 import {
   sendPushNotification,
   updateDocumentFireStore,
@@ -74,9 +72,6 @@ export async function updateBlueData(currentCronDate) {
   };
 
   updateDocumentFireStore(data);
-
-  const filePath = path.join(process.cwd(), "./db/dollar_blue.json");
-  await writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
 
   if (parseInt(cleanValueBuy) > parseInt(currentData.buy)) {
     const { title, body } = pushMessage.dolarUp(removeStr(values[0], "$"));
