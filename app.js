@@ -5,6 +5,7 @@ import path from "node:path";
 import {
   sendPushNotification,
   updateDocumentFireStore,
+  getBlueDataFireStore,
 } from "./firebase/firebase.js";
 import { pushMessage } from "./constant/constant.js";
 import { getTableData } from "./supabase/supabase.js";
@@ -44,9 +45,7 @@ export async function frameBlueData(currentCronDate) {
 }
 
 export async function updateBlueData(currentCronDate) {
-  const currentData = await readFile("./db/dollar_blue.json", "utf-8").then(
-    JSON.parse
-  );
+  const currentData = await getBlueDataFireStore();
 
   const response = await axios.get(PAGE_URL);
   const $ = await cheerio.load(response.data);
