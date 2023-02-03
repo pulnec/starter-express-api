@@ -4,7 +4,12 @@ import { readFile } from "node:fs/promises";
 import encryptor from "simple-encryptor";
 import * as dotenv from "dotenv";
 dotenv.config();
+
 const key = process.env.KEY_SALT;
+const fbTopicName = process.env.FB_TOPIC;
+const fbCollectionName = process.env.FB_COLLECTION_NAME;
+const fbDocumentName = process.env.FB_DOCUMENT_NAME;
+
 const encryptGen = encryptor.createEncryptor(key);
 
 export const firebaseInit = async () => {
@@ -26,8 +31,8 @@ export const firebaseInit = async () => {
 export const updateDocumentFireStore = async (data) => {
   const db = getFirestore();
   const res = await db
-    .collection("DOLAR_BLUE")
-    .doc("SCREPER_DOLAR_BLUE")
+    .collection(fbCollectionName)
+    .doc(fbDocumentName)
     .set(data);
   console.log(res);
 };
@@ -35,8 +40,8 @@ export const updateDocumentFireStore = async (data) => {
 export const getBlueDataFireStore = async () => {
   const db = getFirestore();
   const dolarBlueCollection = db
-    .collection("DOLAR_BLUE")
-    .doc("SCREPER_DOLAR_BLUE");
+    .collection(fbCollectionName)
+    .doc(fbDocumentName);
   const dolarBlue = await dolarBlueCollection.get();
   return dolarBlue.data();
 };
@@ -48,7 +53,7 @@ export const sendPushNotification = (title, body) => {
         title,
         body,
       },
-      topic: "cambiando-app-topic",
+      topic: fbTopicName,
     };
 
     admin
